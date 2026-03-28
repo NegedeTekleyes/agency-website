@@ -20,11 +20,11 @@ export default function WhyUsSection() {
 
           {/* Right Side - Content */}
           <div>
-            <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-6">
-              Build with us.<br />
+            <h3 className="text-3xl md:text-5xl font-bold leading-tight mb-6">
+              Build with us.
               We&apos;re a startup studio designed<br />
               for entrepreneurs to create and launch new companies.
-            </h2>
+            </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10 mt-12">
               
