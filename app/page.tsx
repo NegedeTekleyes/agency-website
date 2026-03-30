@@ -1,11 +1,11 @@
 import AboutSection from "@/components/about/AboutSection";
-import HeroSection from "@/components/home/HeroSection";
+//import HeroSection from "@/components/home/HeroSection";
 import Image from "next/image";
 
 export default function Home() {
   return (
    <div>
-    <HeroSection/>
+    {/* <HeroSection/> */}
     <AboutSection/>
    </div>
   );
