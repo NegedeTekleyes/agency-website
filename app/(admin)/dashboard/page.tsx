@@ -30,7 +30,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-white text-black">
+    <div className="flex p-6 md:p-10 space-y-6 min-h-screen bg-white text-black">
 
       {/* ✅ SIDEBAR */}
       <aside className="w-64 bg-gray-300 shadow-md p-6 flex flex-col justify-between">
@@ -95,10 +95,10 @@ export default function DashboardPage() {
       </aside>
 
       {/* ✅ MAIN CONTENT */}
-     <main className="flex p-6 md:p-10 bg-gray-50">
+   <main className="flex-1 p-6 md:p-10 bg-gray-50 space-y-8">
 
-  {/* 🔥 Header */}
-  <div className="mb-8">
+  {/* 🔥 HEADER (FULL WIDTH TOP) */}
+  <div>
     <h2 className="text-3xl font-bold text-gray-800">
       Dashboard Overview
     </h2>
@@ -106,11 +106,9 @@ export default function DashboardPage() {
       Welcome back! Here's what's happening today.
     </p>
   </div>
-  <div className="flex flex-col lg:flex-row gap-6">
-    {/* left side */}
-    <div className="flex-1 space-y-6">
-  {/* 🔥 Stats Cards */}
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+  {/* 🔥 STATS SECTION */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
     
     <div className="bg-white p-6 rounded-xl shadow-sm">
       <h3 className="text-gray-500 text-sm">Total Services</h3>
@@ -122,65 +120,68 @@ export default function DashboardPage() {
       <p className="text-3xl font-bold text-gray-800 mt-2">8</p>
     </div>
 
-
     <div className="bg-white p-6 rounded-xl shadow-sm">
       <h3 className="text-gray-500 text-sm">Messages</h3>
       <p className="text-3xl font-bold text-gray-800 mt-2">5</p>
-       {/* 🔥 Quick Actions */}
     </div>
-  <div className="bg-white p-6 rounded-xl shadow-sm">
-    <h3 className="text-lg font-semibold mb-4 text-gray-800">
-      Quick Actions
-    </h3>
-
-    <div className="flex gap-4 flex-wrap">
-      <button className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition">
-        + Add Service
-      </button>
-
-      <button className="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-800 transition">
-        + New Blog Post
-      </button>
-    </div>
-  </div>
-  </div>
- </div>
-{/* right side */}
-<div className="w-fu;; lg:w-[350px] space-y-6">
-    {/* Recent Posts */}
-    <div className="bg-white p-6 rounded-xl shadow-sm">
-      <h3 className="text-lg font-semibold mb-4 text-gray-800">
-        Recent Posts
-      </h3>
-
-      <ul className="space-y-3 text-sm text-gray-600">
-        <li>✔ Modern Web Design Trends</li>
-        <li>✔ Why SEO Matters in 2026</li>
-        <li>✔ Scalable Applications</li>
-      </ul>
-    </div>
-
-</div>
-
 
   </div>
 
+  {/* 🔥 MAIN CONTENT (2 COLUMN BELOW HEADER) */}
+  <div className="flex flex-col lg:flex-row gap-6">
 
-  {/* 🔥 Recent Activity */}
-  <div className="grid md:grid-cols-2 gap-6">
-    {/* Recent Messages */}
-    <div className="bg-white p-6 rounded-xl shadow-sm">
-      <h3 className="text-lg font-semibold mb-4 text-gray-800">
-        Recent Messages
-      </h3>
+    {/* LEFT SIDE */}
+    <div className="flex-1 space-y-6">
 
-      <ul className="space-y-3 text-sm text-gray-600">
-        <li>📩 New message from John</li>
-        <li>📩 Inquiry about services</li>
-        <li>📩 Client follow-up</li>
-      </ul>
-     
+      {/* Quick Actions */}
+      <div className="bg-white p-6 rounded-xl shadow-sm">
+        <h3 className="text-lg font-semibold mb-4 text-gray-800">
+          Quick Actions
+        </h3>
+
+        <div className="flex gap-4 flex-wrap">
+          <button className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition">
+            + Add Service
+          </button>
+
+          <button className="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-800 transition">
+            + New Blog Post
+          </button>
+        </div>
+      </div>
+
+      {/* Recent Messages */}
+      <div className="bg-white p-6 rounded-xl shadow-sm">
+        <h3 className="text-lg font-semibold mb-4 text-gray-800">
+          Recent Messages
+        </h3>
+
+        <ul className="space-y-3 text-sm text-gray-600">
+          <li>📩 New message from John</li>
+          <li>📩 Inquiry about services</li>
+          <li>📩 Client follow-up</li>
+        </ul>
+      </div>
+
+      {/* Recent Posts */}
+      <div className="bg-white p-6 rounded-xl shadow-sm">
+        <h3 className="text-lg font-semibold mb-4 text-gray-800">
+          Recent Posts
+        </h3>
+
+        <ul className="space-y-3 text-sm text-gray-600">
+          <li>✔ Modern Web Design Trends</li>
+          <li>✔ Why SEO Matters in 2026</li>
+          <li>✔ Scalable Applications</li>
+        </ul>
+      </div>
     </div>
+
+    {/* RIGHT SIDE */}
+    {/* <div className="w-full lg:w-[350px] space-y-6"> */}
+
+
+    {/* </div> */}
 
   </div>
 
