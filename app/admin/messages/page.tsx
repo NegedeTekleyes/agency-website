@@ -2,8 +2,26 @@
 
 import { useState } from "react";
 
+// define the sheap of reply
+interface Reply {
+  id: number;
+  text: string;
+  date: string;
+}
+// define the shape of message
+interface Message {
+  id: number;
+  name: string; 
+  email: string;
+  subject: string;
+  message: string;
+  status: "read" | "unread";
+  date: string;
+  replies: Reply[];
+}
+
 export default function MessagesPage() {
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       name: "John Doe",
