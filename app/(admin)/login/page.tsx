@@ -11,8 +11,10 @@ export default function LoginPage() {
     const handleLogin =(e: any) => {
         e.preventDefault();
         if (email === "admin@gmail.com" && password === "123456") {
-      localStorage.setItem("isAdmin", "true");
-      router.push("/admin");
+            // set cookie
+            document.cookie = "isAdmin=true; path=/; max-age=3600"; // 1 hour
+    //   localStorage.setItem("isAdmin", "true");
+      router.push("/");
     } else {
       alert("Invalid credentials");
     }
