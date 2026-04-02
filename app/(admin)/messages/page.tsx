@@ -74,7 +74,7 @@ const handleReply = () => {
     <div className="flex h-screen bg-gray-50 text-black">
 
       {/* 📩 LEFT: MESSAGE LIST */}
-      <div className="w-full md:w-[350px] rounded-lg bg-white overflow-y-auto">
+      <div className="w-full md:w-[350px] rounded-lg bg-gray-100 overflow-y-auto">
 
         <div className="p-4 font-semibold rounded-t-lg bg-gray-200 text-gray-800">
           Messages
@@ -84,7 +84,7 @@ const handleReply = () => {
           <div
             key={msg.id}
             onClick={() => handleSelect(msg)}
-            className={`p-4 cursor-pointer rounded-lg hover:bg-gray-100 ${
+            className={`p-4 cursor-pointer rounded-lg hover:bg-red-300 ${
               msg.status === "unread" ? "bg-gray-100" : ""
             }`}
           >
@@ -132,7 +132,7 @@ const handleReply = () => {
               </div>
             </div>
 
-            {/* 🔥 REPLIES THREAD */}
+            {/*  REPLIES THREAD */}
             <div className="flex-1 mt-6 space-y-4 overflow-y-auto">
 
               {selectedMessage.replies.length === 0 ? (
@@ -157,7 +157,7 @@ const handleReply = () => {
 
             </div>
 
-            {/* 🔥 REPLY BOX */}
+            {/*  REPLY BOX */}
             <div className="mt-4 flex gap-3">
 
               <input
