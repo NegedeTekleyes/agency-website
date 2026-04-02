@@ -13,16 +13,16 @@ export default function DashboardPage() {
       title: "MAIN",
       items: [
         { icon: "/icons/home.png", label: "Home", href: "/admin/dashboard" },
-        { icon: "/icons/analytics.png", label: "Analytics", href: "/admin/posts" },
-        { icon: "/icons/report.svg", label: "Reports", href: "/admin/services" },
-        { icon: "/icons/bell.png", label: "Notifications", href: "/admin/messages" },
+        { icon: "/icons/report.svg", label: "Services", href: "/admin/services" },
+        { icon: "/icons/analytics.png", label: "Posts", href: "/admin/posts" },
+        { icon: "/icons/bell.png", label: "Messages", href: "/admin/messages" },
       ],
     },
     {
       title: "ACCOUNT",
       items: [
-        { icon: "/icons/profile.png", label: "Profile", href: "/profile" },
-        { icon: "/icons/setting.png", label: "Settings", href: "/settings" },
+        { icon: "/icons/profile.png", label: "Profile", href: "/admin/profile" },
+        { icon: "/icons/setting.png", label: "Settings", href: "/admin/settings" },
         {
           icon: "/icons/logout.png",
           label: "Logout",
@@ -33,7 +33,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="flex md:p-10 space-y-6 min-h-screen bg-white text-black">
+    <div className="flex p-6 md:p-10 space-y-6 min-h-screen bg-white text-black">
 
       {/* ✅ SIDEBAR */}
       <aside className="w-64 bg-gray-300 shadow-md p-6 flex flex-col justify-between">
