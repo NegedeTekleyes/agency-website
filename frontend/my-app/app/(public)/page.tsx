@@ -1,0 +1,10 @@
+import AboutPage from "./about/page";
+
+export default function Home(){
+    return (
+        <div className="bg-white">
+            AboutPage
+
+        </div>
+    )
+}
