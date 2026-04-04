@@ -2,8 +2,9 @@ import { NextResponse } from "next/server"
 import { NextRequest } from "next/server"
 
 
-export default function middlware(request: NextRequest, response: NextResponse) {
-const isAdmin = request.cookies.get("isAdmin")
+export default function middlware(request: NextRequest) {
+const isAdmin = request.cookies.get("isAdmin")?.value
+console.log("cOOKIE:", isAdmin)
 
 // protect admin routes
 if (!isAdmin && request.nextUrl.pathname.startsWith("/admin")) {
