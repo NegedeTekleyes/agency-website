@@ -1,5 +1,5 @@
 
-
+const authenticateToken = require("../middleware/auth.middleware");
 const express = require('express');
 const router = express.Router();
 const {
@@ -9,7 +9,7 @@ const {
   getAdminPosts,
   updatePost,
   deletePost
-} = require("../controllers/post.controller");
+} = require("../controller/post.controller");
 // Public routes (no token)
 router.get("/", getPublicPosts);           // for public site
 router.get("/:slug", getPublicPostBySlug); // for public detail
