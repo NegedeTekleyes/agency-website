@@ -2,20 +2,6 @@
 
 const  prisma = require('../config/prisma');
 
-// get all services
-exports.getService = async (req, res) => {
-    try {
-        const services = await prisma.service.findMany({
-                orderBy: {
-                    createdAt: 'desc'
-                }
-        });
-        res.status(200).json(services)
-    } catch (error) {
-        
-    }
-}
-
 // create service from frontend
 exports.createService = async (req,res) => {
     try {
@@ -32,6 +18,21 @@ exports.createService = async (req,res) => {
         res.status(500).json({ error: error.message });
     }
 }
+// get all services
+exports.getService = async (req, res) => {
+    try {
+        const services = await prisma.service.findMany({
+                orderBy: {
+                    createdAt: 'desc'
+                }
+        });
+        res.status(200).json(services)
+    } catch (error) {
+        
+    }
+}
+
+
 
 // update service from frontend
 exports.updateService = async (req,res) => {
@@ -44,11 +45,12 @@ res.status(200).json(updated);
 }
 
 // delete service from frontend
-exports.deleteService = async (res, req) => {
+exports.deleteService = async (req, res) => {
     const {id} = req.params;
+    
     await prisma.service.delete({
         where: {id: Number(id)}
     })
     res.status(200).json({message: 'Service deleted successfully'})
+    console.log("req.params", req.params);
 }
-    
