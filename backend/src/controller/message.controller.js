@@ -6,6 +6,10 @@ const prisma = require('../config/prisma');
 exports.createMessage = async (req,res) => {
     try {
         const {name, email, subject, message} = req.body;
+        // validation
+        if (!name || !email || !subject || !message) {
+            return res.status(400).json({ error: "All fields are required" });
+        }
         const newMessage = await prisma.message.create({
             data: {
                 name,
