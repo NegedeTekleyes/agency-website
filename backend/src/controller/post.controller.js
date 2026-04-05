@@ -3,7 +3,7 @@
 const prisma = require('../config/prisma');
 
 // create post from frontend
-exports.createPost = async(res, req) => {
+exports.createPost = async(req, res) => {
     try {
         const {title,slug,excerpt,content,status} = req.body;
         // validation
@@ -16,7 +16,7 @@ exports.createPost = async(res, req) => {
                 slug,
                 excerpt,
                 content,
-                status
+                status: 'active'
             }
         })
         res.status(201).json(newPost);
