@@ -7,8 +7,9 @@ const jwt = require("jsonwebtoken");
 exports.login = async (req, res) => {
     try {
         const {email, password} = req.body;
+
         // check if user exists
-        const admin = await prisma.user.findUnique({
+        const admin = await prisma.admin.findUnique({
             where: {
                  email
             }
@@ -22,7 +23,7 @@ exports.login = async (req, res) => {
             return res.status(400).json({message: "Invalid password"});
         }
         // generate token
-        const token = jwt.sign({ id: admin.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: admin.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
         // send response
         res.json({
             message: "Login successful", 
@@ -33,4 +34,6 @@ exports.login = async (req, res) => {
         res.status(500).json({message: "Server error"});
         
     }
+            // console.log("Body:", req.body);
+
 }
