@@ -27,8 +27,16 @@ model Post {
   slug      String   @unique
   excerpt   String?
   content   String
-  status    String   @default("draft")
+  status    Status   @default(draft)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  authorId  Int      // who created it
+  author    Admin    @relation(fields: [authorId], references: [id])
+}
+
+enum Status {
+  draft
+  active
 }
 
 model Message {
