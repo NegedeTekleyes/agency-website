@@ -1,126 +1,100 @@
-"use client"; 
-import { useState } from "react";
+"use client";
+import { useEffect, useState } from "react";
 
-export default function NewPostPage() {
-  const [title, setTitle] = useState("");
-  const [excerpt, setExcerpt] = useState("");
-  const [content, setContent] = useState("");
-  const [status, setStatus] = useState("draft");
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+export default function PostsPage() {
+  const [posts, setPosts] = useState([]);
 
-  // Handle image upload
-  const handleImageChange = (e: any) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => setImagePreview(reader.result as string);
-      reader.readAsDataURL(file);
+  const getToken = () => {
+    const match = document.cookie.match(/token=([^;]+)/);
+    return match ? match[1] : null;
+  };
+
+  const fetchPosts = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/posts");
+      const data = await res.json();
+      setPosts(data);
+    } catch (error) {
+      console.error("Failed to fetch posts");
     }
-  }
-  // Form submission handler (placeholder)
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    // Here you would send data to your API
-    console.log({
-      title,
-      excerpt,
-      content,
-      status,
-    });
-    alert("Post created! (Demo – connect to API)");
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const handleDelete = async (id: number) => {
+    const confirmDelete = confirm("Delete this post?");
+    if (!confirmDelete) return;
+
+    try {
+      const token = getToken();
+
+      const res = await fetch(
+        `http://localhost:5000/api/posts/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message);
+
+      alert("Deleted successfully");
+
+      // refresh
+      fetchPosts();
+    } catch (error) {
+      console.error(error);
+      alert("Delete failed");
+    }
   };
 
   return (
-   <div className="min-h-screen bg-gray-50 text-black">
+    <div className="p-6 text-black">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Posts</h1>
 
-      {/*  TOP BAR */}
-      <div className="sticky top-0 z-10 bg-white  px-6 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-semibold">New Post</h1>
-
-        <div className="flex gap-3">
-          <button
-            onClick={() => window.history.back()}
-            className="px-4 py-2 text-sm border rounded-lg"
-          >
-            Cancel
-          </button>
-
-          <button
-            onClick={handleSubmit}
-            className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
-          >
-            Save
-          </button>
-        </div>
+        <a
+          href="/admin/posts/new"
+          className="px-4 py-2 bg-red-500 text-white rounded-lg"
+        >
+          New Post
+        </a>
       </div>
 
-      {/* 🔥 MAIN LAYOUT */}
-      <div className="flex flex-col lg:flex-row gap-6 p-6">
+      <div className="space-y-4">
+        {posts.map((post: any) => (
+          <div
+            key={post.id}
+            className="bg-white p-4 rounded-xl shadow flex justify-between items-center"
+          >
+            <div>
+              <h2 className="font-semibold">{post.title}</h2>
+              <p className="text-sm text-gray-500">{post.status}</p>
+            </div>
 
-        {/* LEFT (EDITOR) */}
-        <div className="flex-1 bg-gray-50 p-6 rounded-xl shadow-sm space-y-6">
+            <div className="flex gap-3">
+              <a
+                href={`/admin/posts/${post.id}/edit`}
+                className="text-blue-500"
+              >
+                Edit
+              </a>
 
-          {/* Title */}
-          <input
-            type="text"
-            placeholder="Post title..."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full text-3xl font-bold outline-none"
-          />
-
-          {/* Excerpt */}
-          <textarea
-            placeholder="Write a short excerpt..."
-            value={excerpt}
-            onChange={(e) => setExcerpt(e.target.value)}
-            className="w-full text-gray-600 outline-none"
-            rows={3}
-          />
-
-          {/* Content */}
-          <textarea
-            placeholder="Start writing your content..."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className="w-full min-h-[300px] outline-none text-gray-800"
-          />
-
-        </div>
-
-        {/* RIGHT (SETTINGS PANEL) */}
-        <div className="w-full lg:w-[300px] space-y-6">
-
-          {/* Status */}
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <h3 className="text-sm font-semibold mb-3">Status</h3>
-
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              className="w-full border p-2 rounded"
-            >
-              <option value="draft">Draft</option>
-              <option value="published">Published</option>
-            </select>
+              <button
+                onClick={() => handleDelete(post.id)}
+                className="text-red-500"
+              >
+                Delete
+              </button>
+            </div>
           </div>
-
-          {/* Image Upload */}
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <h3 className="text-sm font-semibold mb-3">Featured Image</h3>
-
-            <input type="file" onChange={handleImageChange} />
-
-            {imagePreview && (
-              <img
-                src={imagePreview}
-                className="mt-4 rounded-lg"
-              />
-            )}
-          </div>
-
-        </div>
-
+        ))}
       </div>
     </div>
   );
