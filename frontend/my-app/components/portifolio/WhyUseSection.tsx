@@ -13,6 +13,7 @@ export default function WhyUsSection() {
                 src="/image/man2.jpg"     
                 alt="shega"
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>
