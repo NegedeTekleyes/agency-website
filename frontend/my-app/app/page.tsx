@@ -1,6 +1,5 @@
 "use client";
 import AboutSection from "@/components/about/AboutSection";
-import HeroSection from "@/components/home/HeroSection";
 import ServiceSection from "@/components/service/ServiceSection";
 import PortifolioSection from "@/components/portifolio/PortifolioSection";
 import WhyUsSection from "@/components/portifolio/WhyUseSection";
@@ -8,6 +7,7 @@ import TestimonialSection from "@/components/testimonials/TestimonialSection";
 import SloganSection from "@/components/testimonials/SloganSection";
 import BlogSection from "@/components/blog/BlogSection";
 import ContactSection from "@/components/contact/ContactSection";
+import HeroSection from "@/components/HeroSection";
 
 export default function Home() {
   return (

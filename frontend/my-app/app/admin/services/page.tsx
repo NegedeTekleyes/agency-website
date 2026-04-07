@@ -88,7 +88,7 @@ export default function ServicesPage() {
         <h1 className="text-2xl font-bold">Services</h1>
 
         <button
-          onClick={handleAdd} // ✅ OPEN MODAL
+          onClick={handleAdd} 
           className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg"
         >
           + Add Service
