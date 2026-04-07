@@ -1,30 +1,73 @@
+"use client";
+import { useEffect, useState } from "react";
 import BlogCard from "./BlogCard";
-import { posts } from "@/lib/posts";
-// const posts = [
-//   {
-//     id: 1,
-//     title: "Modern Web Design Trends",
-//     excerpt: "Discover the latest trends in modern web design...",
-//     date: "March 20, 2026",
-//     slug: "modern-web-design-trends",
-//   },
-//   {
-//     id: 2,
-//     title: "Why SEO Matters in 2026",
-//     excerpt: "SEO continues to be essential for online success...",
-//     date: "March 18, 2026",
-//     slug: "why-seo-matters",
-//   },
-//   {
-//     id: 3,
-//     title: "Building Scalable Applications",
-//     excerpt: "Learn how to build scalable web applications...",
-//     date: "March 15, 2026",
-//     slug: "scalable-applications",
-//   },
-// ];
+// import { posts } from "@/lib/posts";
 
-export default function BlogSection() {
+
+interface Post {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  createdAt: string;
+}
+interface BlogSectionProps {
+  initialPosts?: Post[];
+}
+
+export default function BlogSection({ initialPosts}: BlogSectionProps) {
+
+  const [posts, setPosts] = useState<Post[]>(initialPosts || []);
+  const [loading, setLoading] = useState(!initialPosts);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const postsPerPage = 6; // adjust as needed
+
+  useEffect(() => {
+    if (initialPosts) return; // if SSR provided, skip fetch
+
+    const fetchPosts = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/posts?page=${page}&limit=${postsPerPage}`
+        );
+        if (!res.ok) throw new Error("Failed to load posts");
+        const data = await res.json();
+        setPosts(data.posts || data); // adjust based on your API response structure
+        setTotalPages(data.totalPages || Math.ceil(data.length / postsPerPage) || 1);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, [page, initialPosts]);
+
+  const handlePrev = () => setPage((p) => Math.max(1, p - 1));
+  const handleNext = () => setPage((p) => Math.min(totalPages, p + 1));
+
+  if (loading) {
+    return (
+      <section className="py-24 px-6 md:px-16 bg-gray-50 text-black">
+        <div className="max-w-6xl mx-auto text-center">Loading articles...</div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="py-24 px-6 md:px-16 bg-gray-50 text-black">
+        <div className="max-w-6xl mx-auto text-center text-red-500">
+          Error: {error}
+        </div>
+      </section>
+    );
+  }
   return (
     <section className="py-24 px-6 md:px-16 bg-gray-50 text-black">
 
@@ -48,8 +91,20 @@ export default function BlogSection() {
 
       {/* Pagination */}
       <div className="flex justify-center gap-6 mt-16 space-x-4">
-        <button className="w-100  rounded-full sm:w-auto px-6 sm:px-10 py-3 bg-red-500 hover:bg-black transition-colors text-white text-sm sm:text-base font-medium tracking-wider rounded-md">Prev</button>
-        <button className="w-100  rounded-full sm:w-auto px-6 sm:px-10 py-3 bg-red-500 hover:bg-black transition-colors text-white text-sm sm:text-base font-medium tracking-wider rounded-md">Next</button>
+        <button
+          onClick={handlePrev}
+          disabled={page === 1}
+          className="w-100 rounded-full sm:w-auto px-6 sm:px-10 py-3 bg-red-500 hover:bg-black transition-colors text-white text-sm sm:text-base font-medium tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Prev
+        </button>
+        <button
+          onClick={handleNext}
+          disabled={page === totalPages}
+          className="w-100 rounded-full sm:w-auto px-6 sm:px-10 py-3 bg-red-500 hover:bg-black transition-colors text-white text-sm sm:text-base font-medium tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Next
+        </button>
       </div>
 
     </section>
