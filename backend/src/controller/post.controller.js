@@ -46,7 +46,7 @@ exports.createPost = async (req, res) => {
         slug,
         excerpt: excerpt || "",
         content,
-        status: status === "active" ? "active" : "draft", // allow frontend to choose
+        status: status === "active" ? "active" : "draft", 
         authorId: authorId
       }
     });
