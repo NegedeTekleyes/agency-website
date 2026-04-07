@@ -1,0 +1,213 @@
+Agency Website – Full‑Stack Development Scope
+1. Overview
+We will build a modern, responsive agency website with a secure admin dashboard. The system will showcase your services, blog, and contact information to the public while allowing you to manage all content easily. The architecture is designed for performance, SEO, and future scalability.
+
+Key highlights:
+
+Public‑facing Next.js website (fast, SEO‑friendly)
+
+Password‑protected admin area with content management
+
+Contact form with spam protection and message storage
+
+Optional AI‑powered content generation (can be added in a second phase)
+
+2. Technology Stack
+Area	Technology Choice
+Frontend	Next.js (App Router) with Tailwind CSS
+Backend	Next.js API Routes (unified codebase)
+Database	PostgreSQL (managed via Neon / Supabase / AWS)
+ORM	Prisma (type‑safe, migrations, easy queries)
+Authentication	NextAuth.js (secure, built‑in) or JWT with http‑only cookies
+Deployment	Vercel (frontend + API) + separate PostgreSQL host
+Image Storage	Cloudinary or Vercel Blob for uploads
+3. Functional Requirements
+3.1 Public Website
+Home page – Hero section, featured services, latest blog posts, navigation.
+
+About page – Agency story, mission/vision.
+
+Services page – List of services with title, description, optional image.
+
+Blog page – Paginated list of posts, each with title, excerpt, date, and slug for SEO.
+
+Contact page – Form with name, email, message; stores messages in database and sends email notification (optional).
+
+All pages are fully responsive (mobile‑first) and include dynamic meta tags for SEO.
+
+3.2 Admin Dashboard (Password‑protected)
+After login, the admin can:
+
+Services – Add, edit, delete services.
+
+Blog posts – Create, edit, delete posts. Support for draft/published status, featured image upload.
+
+Messages – View and delete contact messages. Mark as read/unread.
+
+3.3 AI Content Generator (Optional Phase 2)
+If required, the dashboard will include a tool that uses OpenAI to generate blog content or service descriptions. Generated text can be edited and saved directly as a draft or published. All AI usage is logged for monitoring.
+
+4. Non‑Functional Requirements
+Security
+
+Passwords hashed with bcrypt.
+
+All admin routes protected with authentication.
+
+Rate limiting on public forms to prevent spam.
+
+Performance
+
+Static generation (SSG) for blog and service pages, with incremental static regeneration (ISR) for instant updates.
+
+Images optimized with Next.js <Image> and served via a CDN.
+
+Maintainability
+
+Clean, modular code with TypeScript.
+
+Automated database migrations using Prisma.
+
+API endpoints fully typed with Zod validation.
+
+Reliability
+
+Error logging (e.g., Sentry).
+
+Health check endpoint for monitoring.
+
+5. Database Design
+All tables use UUID primary keys, created_at, and updated_at timestamps.
+
+users
+
+id UUID
+
+email string (unique)
+
+password string (hashed)
+
+name string
+
+role enum (admin, editor) – default editor
+
+services
+
+id UUID
+
+title string
+
+slug string (unique, for SEO)
+
+description text
+
+image_url string (optional)
+
+order integer (for custom sorting)
+
+posts
+
+id UUID
+
+title string
+
+slug string (unique)
+
+excerpt string (short summary)
+
+content text
+
+featured_image string (optional)
+
+status enum (draft, published)
+
+author_id UUID → users.id
+
+published_at timestamp
+
+messages
+
+id UUID
+
+name string
+
+email string
+
+message text
+
+status enum (unread, read, replied) – default unread
+
+ip_address string (optional, for spam detection)
+
+ai_logs (optional, if AI feature is added)
+
+id UUID
+
+prompt text
+
+response text
+
+type string (blog/service)
+
+user_id UUID → users.id (nullable)
+
+Indexes are created on email, slug, and status fields for fast lookups.
+
+6. API Design (RESTful)
+All endpoints return JSON. Authentication is required for admin routes using a JWT stored in an http‑only cookie.
+
+Authentication
+POST /api/auth/register – create first admin user (may be limited to one)
+
+POST /api/auth/login – obtain session cookie
+
+GET /api/auth/me – get current user
+
+POST /api/auth/logout – destroy session
+
+Services (public + admin)
+GET /api/services – list (public, with optional sorting)
+
+GET /api/services/:slug – detail (public)
+
+POST /api/services – create (admin)
+
+PUT /api/services/:id – update (admin)
+
+DELETE /api/services/:id – delete (admin)
+
+Posts (public + admin)
+GET /api/posts – list (public, paginated, filter by status if admin)
+
+GET /api/posts/:slug – detail (public)
+
+POST /api/posts – create (admin)
+
+PUT /api/posts/:id – update (admin)
+
+DELETE /api/posts/:id – delete (admin)
+
+Messages
+POST /api/messages – submit contact form (public, rate‑limited)
+
+GET /api/messages – list (admin, paginated)
+
+DELETE /api/messages/:id – delete (admin)
+
+AI (optional)
+POST /api/ai/generate – generate content (admin only)
+
+All request/response bodies are validated with Zod, and errors follow a consistent { error: { code, message } } format.
+
+7. Deployment & DevOps
+Frontend & API – Deployed on Vercel. Automatic preview deployments for every pull request.
+
+Database – Hosted on a managed PostgreSQL service (e.g., Neon, Supabase). Migrations run via Prisma during CI/CD.
+
+Environment variables – Stored securely in Vercel and never committed.
+
+Monitoring – Sentry for error tracking; Vercel Analytics for performance.
+
+Backup – Daily automated backups of the database.
+
+A one‑click deployment setup will be provided, along with a step‑by‑step guide for future maintenance.
