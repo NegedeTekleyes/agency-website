@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 export default function HeroSection() {
@@ -21,7 +22,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-black/50"></div>
 
       {/* Top Navbar */}
-      <div className="absolute top-0 left-0 w-full flex justify-between items-center p-6 z-20">
+      <div className=" fixed absolute top-0 left-0 w-full flex justify-between items-center p-6 z-20">
         <div className="border border-red-500 px-3 py-1 text-red-500 font-bold">
           S.
         </div>
@@ -56,14 +57,15 @@ export default function HeroSection() {
             ✕
           </button>
 
-          <ul className="space-y-6 mt-10 text-lg">
-            <li>Home</li>
-            <li>About Agency</li>
-            <li>Services</li>
-            <li>Portfolio</li>
-            <li>Testimonial</li>
-            <li>Contact Us</li>
-          </ul>
+ <ul className="space-y-6 mt-10 text-lg">
+  <li><a href="#home" onClick={() => setMenuOpen(false)}>Home</a></li>
+  <li><a href="#about" onClick={() => setMenuOpen(false)}>About Agency</a></li>
+  <li><a href="#services" onClick={() => setMenuOpen(false)}>Services</a></li>
+  <li><a href="#portfolio" onClick={() => setMenuOpen(false)}>Portfolio</a></li>
+  <li><a href="#blog" onClick={() => setMenuOpen(false)}>Blog</a></li>
+  <li><a href="#testimonial" onClick={() => setMenuOpen(false)}>Testimonial</a></li>
+  <li><a href="#contact" onClick={() => setMenuOpen(false)}>Contact Us</a></li>
+</ul>
         </div>
       )}
     </section>
