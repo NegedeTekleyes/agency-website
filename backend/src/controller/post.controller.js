@@ -34,7 +34,7 @@ exports.getPublicPostBySlug = async (req, res) => {
 exports.createPost = async (req, res) => {
   try {
     const { title, slug, excerpt, content, status } = req.body;
-    const authorId = req.adminId; // from auth middleware
+    const authorId = req.user.id; // from auth middleware
 
     if (!title || !slug || !content) {
       return res.status(400).json({ error: "Title, slug and content are required" });
@@ -47,11 +47,12 @@ exports.createPost = async (req, res) => {
         excerpt: excerpt || "",
         content,
         status: status === "active" ? "active" : "draft", // allow frontend to choose
-        authorId
+        authorId: authorId
       }
     });
     res.status(201).json(newPost);
   } catch (error) {
+    console.log("Error creating post:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -69,6 +70,18 @@ exports.getAdminPosts = async (req, res) => {
   }
 };
 
+exports.getPostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await prisma.post.findUnique({
+      where: { id: Number(req.params.id) }
+    });
+    if (!post) return res.status(404).json({ error: "Post not found" });
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 // Update a post
 exports.updatePost = async (req, res) => {
   try {
