@@ -23,7 +23,7 @@ function authenticateToken(req, res, next) {
     }
     
     // 5. Token is valid – attach admin ID to request object
-    req.adminId = decoded.id;
+    req.user = decoded;
     
     // 6. Continue to the next middleware/route handler
     next();
