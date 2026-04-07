@@ -88,7 +88,7 @@ const getToken = () => {
         </div>
       </div>
 
-      {/* 🔥 MAIN LAYOUT */}
+      {/*  MAIN LAYOUT */}
       <div className="flex flex-col lg:flex-row gap-6 p-6">
 
         {/* LEFT (EDITOR) */}
