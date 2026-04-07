@@ -6,6 +6,7 @@ const {
   getPublicPosts,
   getPublicPostBySlug,
   createPost,
+  getPostById,
   getAdminPosts,
   updatePost,
   deletePost
@@ -15,9 +16,10 @@ router.get("/", getPublicPosts);           // for public site
 router.get("/:slug", getPublicPostBySlug); // for public detail
 
 // Admin routes (require JWT)
-router.get("/admin/posts", authenticateToken, getAdminPosts);
-router.post("/admin/posts", authenticateToken, createPost);
-router.put("/admin/posts/:id", authenticateToken, updatePost);
-router.delete("/admin/posts/:id", authenticateToken, deletePost);
+router.get("/", authenticateToken, getAdminPosts);
+router.get("/:id", authenticateToken, getPostById); 
+router.post("/", authenticateToken, createPost);
+router.put("/:id", authenticateToken, updatePost);
+router.delete("/:id", authenticateToken, deletePost);
 
 module.exports = router;
