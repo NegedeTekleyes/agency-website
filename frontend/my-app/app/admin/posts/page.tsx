@@ -94,7 +94,7 @@ export default function PostsPage() {
             {posts.map((post: any) => (
               <tr
                 key={post.id}
-                className="border-t hover:bg-gray-50 transition"
+                className="border-t hover:bg-gray-100 transition"
               >
                 <td className="px-6 py-4 font-medium">
                   {post.title}
