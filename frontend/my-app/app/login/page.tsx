@@ -32,7 +32,7 @@ export default function LoginPage() {
       document.cookie = `token=${data.token}; path=/; max-age=86400; SameSite=Strict`;
 
       // Redirect to admin dashboard
-      router.push("/admin");
+      router.push("/admin/dashboard");
     } catch (err: any) {
       setError(err.message);
     } finally {
