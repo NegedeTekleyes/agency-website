@@ -1,6 +1,6 @@
 export default function ContactSection() {
   return (
-    <section className="py-20 md:py-28 px-6 bg-white text-black min-h-screen flex flex-col pt-24">
+    <section className="py-20 md:py-28 pb-0 px-6 bg-white text-black min-h-screen flex flex-col pt-24">
       <div className="max-w-3xl mx-auto w-full flex-1">
         {/* Header */}
         <div className="text-center mt-16 mb-16">
@@ -89,7 +89,7 @@ export default function ContactSection() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-16 w-full bg-black text-xs text-white tracking-widest">
+      <footer className="mt-16  w-full bg-black text-xs text-white tracking-widest">
   <div className="flex items-center justify-center min-h-[100px] px-4">
     <div className="max-w-5xl w-full mx-auto">
       <div className="flex flex-wrap md:flex-row justify-between items-center gap-6">

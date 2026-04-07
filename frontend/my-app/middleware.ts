@@ -4,8 +4,8 @@ import type { NextRequest } from "next/server"
 
 export default function middleware(request: NextRequest) {
 const token = request.cookies.get("token")?.value
-const isLoginPage = request.nextUrl.pathname === "/login"
 const isAdminRoute = request.nextUrl.pathname.startsWith("/admin")
+const isLoginPage = request.nextUrl.pathname === "/"
 
 // if trying to access admin route without token, redirect to login
 if (isAdminRoute && !token) {
