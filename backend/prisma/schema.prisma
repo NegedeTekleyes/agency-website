@@ -10,8 +10,8 @@ model Admin {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
+  posts Post[]
   createdAt DateTime @default(now())
-  posts     Post[]
 }
 
 model Service {
@@ -31,7 +31,7 @@ model Post {
   status    Status   @default(draft)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  authorId  Int // who created it
+  authorId  Int      // who created it
   author    Admin    @relation(fields: [authorId], references: [id])
 }
 
@@ -41,17 +41,17 @@ enum Status {
 }
 
 model Message {
-  id      Int    @id @default(autoincrement())
-  name    String
-  email   String
-  subject String
-  message String
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  subject     String
+  message     String
 
-  status String @default("unread")
+  status      String   @default("unread")
 
-  reply     String? // admin reply message
-  repliedAt DateTime? // when admin replied
-  isReplied Boolean   @default(false)
+  reply       String?     // admin reply message
+  repliedAt   DateTime?   // when admin replied
+  isReplied   Boolean     @default(false)
 
-  createdAt DateTime @default(now())
+  createdAt   DateTime @default(now())
 }
